@@ -22,7 +22,7 @@ class AdminForm(forms.ModelForm):
         password1: Optional[str] = self.cleaned_data.get('password1')
         password2: Optional[str] = self.cleaned_data.get('password2')
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError('Password mismatch')
+            raise forms.ValidationError(_('Password mismatch'))
         return password2
 
     def save(self, commit: bool = True) -> User:

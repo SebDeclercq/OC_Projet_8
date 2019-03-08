@@ -1,6 +1,6 @@
 from typing import Any
 from django.contrib.auth.base_user import BaseUserManager
-
+from django.utils.text import format_lazy
 
 class UserManager(BaseUserManager):
     use_in_migration: bool = True
@@ -28,7 +28,7 @@ class UserManager(BaseUserManager):
         for config_field in ('is_superuser', 'is_staff'):
             extra_fields.setdefault(config_field, True)
             if extra_fields.get(config_field) is not True:
-                raise ValueError(
-                    f'Superuser must have {config_field}=True.'
-                )
+                raise ValueError(format_lazy(
+                    'Superuser must have {field}=True.', field=config_field
+                ))
         return self._create_user(email, password, **extra_fields)

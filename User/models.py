@@ -20,6 +20,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active: models.BooleanField = models.BooleanField(
         _('active'), default=True
     )
+    is_staff: models.BooleanField = models.BooleanField(
+        _('staff'), default=False
+    )
 
     objects: UserManager = UserManager()
 

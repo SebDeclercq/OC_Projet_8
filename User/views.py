@@ -1,9 +1,9 @@
-from typing import Any, Optional
+from typing import Any, Optional, Type
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
-from django.urls import reverse
-from django.views.generic import TemplateView, View
+from django.views.generic import CreateView, TemplateView, View
+from .forms import SignUpForm
 from .models import User
 
 
@@ -28,3 +28,15 @@ class LogoutView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         logout(request)
         return redirect('user:login')
+
+
+class SignUpView(CreateView):
+    model: Type[User] = User
+    template_name: str = 'signup.html'
+    form_class: Type[SignUpForm] = SignUpForm
+    success_url: str = 'login'
+
+    def form_valid(self, form: Any) -> Any:
+        valid = super(SignUpView, self).form_valid(form)
+        ...
+        # TO CONTINUE, SEE : https://stackoverflow.com/a/31491942

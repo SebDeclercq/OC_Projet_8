@@ -31,3 +31,9 @@ class AdminForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class SignUpForm(AdminForm):
+    class Meta:
+        model: Type[User] = User
+        fields: Sequence[str] = ('email',)

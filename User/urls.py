@@ -8,5 +8,5 @@ app_name: str = 'user'
 
 
 urlpatterns: List[path] = [
-    path(_('login'), views.ConnectionView.as_view(), name=_('login')),
+    path(_('login'), views.LoginView.as_view(), name=_('login')),
 ]

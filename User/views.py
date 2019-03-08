@@ -6,7 +6,7 @@ from django.views.generic import TemplateView
 from .models import User
 
 
-class ConnectionView(TemplateView):
+class LoginView(TemplateView):
     template_name: str = 'login.html'
 
     def post(

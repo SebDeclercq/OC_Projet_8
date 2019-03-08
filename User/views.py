@@ -1,8 +1,9 @@
 from typing import Any, Optional
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.views.generic import TemplateView, View
 from .models import User
 
 
@@ -19,5 +20,11 @@ class LoginView(TemplateView):
         )
         if user is not None and user.is_active:
             login(request, user)
-            return HttpResponse('YEAAHHHH')
+            return render(request, self.template_name)
         return render(request, self.template_name, {'wrong_credentials': True})
+
+
+class LogoutView(View):
+    def get(self, request: HttpRequest) -> HttpResponse:
+        logout(request)
+        return redirect('user:login')

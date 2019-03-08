@@ -1,6 +1,7 @@
 from typing import Any, Optional, Type
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpRequest, HttpResponse
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.views.generic import CreateView, TemplateView, View
 from .forms import SignUpForm
@@ -36,7 +37,12 @@ class SignUpView(CreateView):
     form_class: Type[SignUpForm] = SignUpForm
     success_url: str = 'login'
 
-    def form_valid(self, form: Any) -> Any:
+    def form_valid(self, form: SignUpForm) -> HttpResponseRedirect:
         valid = super(SignUpView, self).form_valid(form)
-        ...
-        # TO CONTINUE, SEE : https://stackoverflow.com/a/31491942
+        user: Optional[User] = authenticate(  # type: ignore
+            username=form.cleaned_data.get('email'),
+            password=form.cleaned_data.get('password1')
+        )
+        if user is not None and user.is_active:
+            login(self.request, user)
+        return valid

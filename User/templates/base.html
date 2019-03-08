@@ -13,8 +13,11 @@
             <form style="display: inline-block;" action="{% url "user:logout" %}">
                 <input type="submit" value="Log out" />
             </form>
+            <form style="display: inline-block;" action="{% url "user:signup" %}">
+                <input type="submit" value="Sign up" />
+            </form>
             {% if user.is_authenticated %}
-            <p  style="display: inline-block;">YOU'RE LOGGED IN</p>
+            <p  style="display: inline-block;">YOU'RE LOGGED IN AS {{ user.email }}</p>
             {% endif %}
         </div>
         <div id="content">

@@ -1,6 +1,8 @@
 from typing import Any, List, Optional, Sequence
 from django.db import models
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.contrib.auth.models import (BaseUserManager,
+                                        AbstractBaseUser,
+                                        PermissionsMixin)
 
 
 class CustomUserManager(BaseUserManager):
@@ -29,7 +31,7 @@ class CustomUserManager(BaseUserManager):
         for required_field in required_fields:
             if not required_field:
                 raise ValueError(f'A {required_field} is required for Users')
-        user: CustomUser = self.model(
+        user: CustomUser = self.model(  # type: ignore
             email=self.normalize_email(email),
             name=name,
             firstname=firstname
@@ -38,7 +40,7 @@ class CustomUserManager(BaseUserManager):
         return user
 
 
-class CustomUser(AbstractBaseUser):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     '''Custom User Model'''
     email: models.EmailField = models.EmailField(max_length=255, unique=True)
     name: models.CharField = models.CharField(max_length=255, null=True)
@@ -49,16 +51,10 @@ class CustomUser(AbstractBaseUser):
     objects: CustomUserManager = CustomUserManager()
 
     USERNAME_FIELD: str = 'email'
-    REQUIRED_FIELDS: List[str] = ['password']
+    REQUIRED_FIELDS: List[str] = []
 
     def __str__(self) -> str:
         return self.email
-
-    def has_perm(self, perm: str, obj: Any = None) -> bool:
-        return True
-
-    def has_module_perms(self, app_label: str) -> bool:
-        return True
 
     @property
     def is_staff(self) -> bool:

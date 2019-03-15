@@ -20,10 +20,10 @@ class Product(models.Model):
         _('product name'), max_length=500, blank=False
     )
     nutrition_grade: models.CharField = models.CharField(
-        _('nutrition_grade'), choices=NUTRITION_GRADES, blank=False,
+        _('nutrition grade'), choices=NUTRITION_GRADES, blank=False,
         max_length=1
     )
-    url: models.URLField = models.URLField(blank=False, unique=True)
+    url: models.URLField = models.URLField(_('url'), blank=False, unique=True)
 
     objects: models.Manager = models.Manager()
 
@@ -45,3 +45,10 @@ class Product(models.Model):
         return Product.objects.filter(
             nutrition_grade__in=better_grades
         )
+
+
+class Category(models.Model):
+    name: models.CharField = models.CharField(
+        _('category name'), max_length=255, blank=False
+    )
+    objects: models.Manager = models.Manager()

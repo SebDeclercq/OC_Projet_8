@@ -1,7 +1,7 @@
 from typing import Dict, List, Optional
 from django.db.models.query import QuerySet
 from django.test import TestCase
-from .models import Product
+from .models import Category, Product
 
 
 class TestProductModel(TestCase):
@@ -36,3 +36,9 @@ class TestProductModel(TestCase):
             not_so_top_product
         )
         self.assertIn(top_product, substitutes)
+
+
+class TestCategoryModel(TestCase):
+    def test_category_insertion(self) -> None:
+        catego: Category = Category.objects.create(name='Category 1')
+        self.assertEqual(Category.objects.first(), catego)

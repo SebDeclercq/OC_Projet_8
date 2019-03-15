@@ -46,6 +46,9 @@ class Product(models.Model):
             nutrition_grade__in=better_grades
         )
 
+    def delete_all() -> None:  # type: ignore
+        Product.objects.all().delete()
+
 
 class Category(models.Model):
     name: models.CharField = models.CharField(
@@ -54,6 +57,14 @@ class Category(models.Model):
     products: models.ManyToManyField = models.ManyToManyField(Product)
     objects: models.Manager = models.Manager()
 
+    class Meta:
+        ordering: Sequence[str] = ('name',)
+        verbose_name: str = _('category')
+        verbose_name_plural: str = _('categories')
+
     def __str__(self) -> str:
         products: List[Product] = list(self.products.all())
         return f'<Category#{self.name} products={products}>'
+
+    def delete_all() -> None:  # type: ignore
+        Category.objects.all().delete()

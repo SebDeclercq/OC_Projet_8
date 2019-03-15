@@ -10,6 +10,10 @@ class TestProductModel(TestCase):
             barcode='123456', name='Test product',
             nutrition_grade='A', url='http://example.com',
         )
+        self.data2: Dict[str, str] = dict(
+            barcode='789123', name='Test product 2',
+            nutrition_grade='C', url='http://example2.com',
+        )
 
     def test_product_insertion(self) -> None:
         product: Product = Product.objects.create(**self.data)
@@ -27,15 +31,18 @@ class TestProductModel(TestCase):
 
     def test_substitute_manager(self) -> None:
         top_product: Product = Product.objects.create(**self.data)
-        cat_c_data: Dict[str, str] = dict(
-            barcode='789123', name='Test product 2',
-            nutrition_grade='C', url='http://example2.com',
-        )
-        not_so_top_product: Product = Product.objects.create(**cat_c_data)
+        not_so_top_product: Product = Product.objects.create(**self.data2)
         substitutes: QuerySet = Product.get_substitutes_for(
             not_so_top_product
         )
         self.assertIn(top_product, substitutes)
+
+    def test_delete_all(self) -> None:
+        for data in (self.data, self.data2):
+            Product.objects.create(**data)
+        self.assertEqual(len(Product.objects.all()), 2)
+        Product.delete_all()
+        self.assertEqual(len(Product.objects.all()), 0)
 
 
 class TestCategoryModel(TestCase):
@@ -68,3 +75,10 @@ class TestCategoryModel(TestCase):
             self.assertIn(self.product, saved_catego.products.all())
             self.assertIn(catego,
                           self.product.category_set.all())  # type: ignore
+
+    def test_delete_all(self) -> None:
+        for i in range(5):
+            Category.objects.create(name=f'Category {i}')
+        self.assertEqual(len(Category.objects.all()), 5)
+        Category.delete_all()
+        self.assertEqual(len(Category.objects.all()), 0)

@@ -44,6 +44,10 @@ class TestCategoryModel(TestCase):
             barcode='123456', name='Test product',
             nutrition_grade='A', url='http://example.com',
         )
+        self.product2: Product = Product.objects.create(
+            barcode='789123', name='Test product 2',
+            nutrition_grade='C', url='http://example2.com',
+        )
 
     def test_category_insertion(self) -> None:
         catego: Category = Category.objects.create(name='Category 1')
@@ -51,13 +55,14 @@ class TestCategoryModel(TestCase):
 
     def test_category_repr(self) -> None:
         catego: Category = Category.objects.create(name='Category 1')
-        self.assertEqual(str(Category.objects.first()),
-                         f'<Category#Category 1 products=[{self.product}]>')
+        catego.products.add(self.product)
+        self.assertEqual(
+            str(Category.objects.first()),
+            f'<Category#Category 1 products=[<Product: {self.product}>]>')
 
     def test_many_to_many_products(self) -> None:
         catego: Category = Category.objects.create(name='Category 1')
         catego.products.add(self.product)
-        # catego.save()
         saved_catego: Optional[Category] = Category.objects.first()
         if saved_catego is not None:
             self.assertIn(self.product, saved_catego.products.all())

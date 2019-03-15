@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'User.apps.UserConfig',
+    'Testing.apps.TestingConfig',
     'Food.apps.FoodConfig',
 ]
 

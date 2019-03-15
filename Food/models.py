@@ -1,4 +1,5 @@
-from typing import Sequence, Tuple
+from __future__ import annotations
+from typing import List, Sequence, Tuple
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -34,3 +35,13 @@ class Product(models.Model):
     def __str__(self) -> str:
         return (f'<Product#{self.barcode} name={self.name} '
                 f'nutrition_grade={self.nutrition_grade}')
+
+    def get_substitutes_for(product: Product) -> models.query.QuerySet:
+        nutrition_grades_scale: List[str] = []
+        for grade, __ in Product.NUTRITION_GRADES:
+            nutrition_grades_scale.append(grade)
+        idx: int = nutrition_grades_scale.index(product.nutrition_grade)
+        better_grades: List[str] = nutrition_grades_scale[:idx]
+        return Product.objects.filter(
+            nutrition_grade__in=better_grades
+        )

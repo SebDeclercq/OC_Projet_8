@@ -1,4 +1,5 @@
-from typing import Dict, Optional
+from typing import Dict, List, Optional
+from django.db.models.query import QuerySet
 from django.test import TestCase
 from .models import Product
 
@@ -23,3 +24,15 @@ class TestProductModel(TestCase):
                 f'<Product#{self.data["barcode"]} name={self.data["name"]} '
                 f'nutrition_grade={self.data["nutrition_grade"]}'
             )
+
+    def test_substitute_manager(self) -> None:
+        top_product: Product = Product.objects.create(**self.data)
+        cat_c_data: Dict[str, str] = dict(
+            barcode='789123', name='Test product 2',
+            nutrition_grade='C', url='http://example2.com',
+        )
+        not_so_top_product: Product = Product.objects.create(**cat_c_data)
+        substitutes: QuerySet = Product.get_substitutes_for(
+            not_so_top_product
+        )
+        self.assertIn(top_product, substitutes)

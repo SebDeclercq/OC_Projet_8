@@ -12,6 +12,7 @@ django-stubs = "*"
 [packages]
 django = "*"
 coverage = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"

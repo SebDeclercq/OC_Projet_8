@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'User.apps.UserConfig',
     'Testing.apps.TestingConfig',
     'Food.apps.FoodConfig',
+    'OpenFoodFacts',
 ]
 
 MIDDLEWARE = [

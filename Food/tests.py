@@ -22,7 +22,7 @@ class TestProductModel(TestCase):
             self.assertEqual(
                 str(product),
                 f'<Product#{self.data["barcode"]} name={self.data["name"]} '
-                f'nutrition_grade={self.data["nutrition_grade"]}'
+                f'nutrition_grade={self.data["nutrition_grade"]}>'
             )
 
     def test_substitute_manager(self) -> None:
@@ -39,6 +39,27 @@ class TestProductModel(TestCase):
 
 
 class TestCategoryModel(TestCase):
+    def setUp(self) -> None:
+        self.product: Product = Product.objects.create(
+            barcode='123456', name='Test product',
+            nutrition_grade='A', url='http://example.com',
+        )
+
     def test_category_insertion(self) -> None:
         catego: Category = Category.objects.create(name='Category 1')
         self.assertEqual(Category.objects.first(), catego)
+
+    def test_category_repr(self) -> None:
+        catego: Category = Category.objects.create(name='Category 1')
+        self.assertEqual(str(Category.objects.first()),
+                         f'<Category#Category 1 products=[{self.product}]>')
+
+    def test_many_to_many_products(self) -> None:
+        catego: Category = Category.objects.create(name='Category 1')
+        catego.products.add(self.product)
+        # catego.save()
+        saved_catego: Optional[Category] = Category.objects.first()
+        if saved_catego is not None:
+            self.assertIn(self.product, saved_catego.products.all())
+            self.assertIn(catego,
+                          self.product.category_set.all())  # type: ignore

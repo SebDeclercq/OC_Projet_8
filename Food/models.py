@@ -34,7 +34,7 @@ class Product(models.Model):
 
     def __str__(self) -> str:
         return (f'<Product#{self.barcode} name={self.name} '
-                f'nutrition_grade={self.nutrition_grade}')
+                f'nutrition_grade={self.nutrition_grade}>')
 
     def get_substitutes_for(product: Product) -> models.query.QuerySet:
         nutrition_grades_scale: List[str] = []
@@ -51,4 +51,9 @@ class Category(models.Model):
     name: models.CharField = models.CharField(
         _('category name'), max_length=255, blank=False
     )
+    products: models.ManyToManyField = models.ManyToManyField(Product)
     objects: models.Manager = models.Manager()
+
+    def __str__(self) -> str:
+        products: List[Product] = list(self.products.all())
+        return f'<Category#{self.name} products={products}>'

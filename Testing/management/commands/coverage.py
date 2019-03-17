@@ -9,14 +9,17 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser: CommandParser) -> None:
         parser.add_argument('--app', type=str, help='The App to test')
+        parser.add_argument('--html', action='store_true',
+                            help='Turns on the HTML reporting')
 
     def handle(self, *args: Any, **kwargs: Any) -> None:
         print('Starts the tests coverage compute')
         cmds: List[str] = [
             'coverage erase',
             'coverage run manage.py test',
-            'coverage html',
         ]
+        if kwargs['html']:
+            cmds.append('coverage html')
         if 'app' in kwargs and kwargs['app'] is not None:
             cmds[1] += ' ' + kwargs['app']
         for cmd in cmds:
@@ -46,7 +49,10 @@ class Command(BaseCommand):
                 stmts += int(parts[1])
                 miss += int(parts[2])
                 cover.append(int(parts[3].strip('%')))
-            total: str = str(int(sum(cover) / len(cover))) + '%'
+            if len(cover):
+                total: str = str(int(sum(cover) / len(cover))) + '%'
+            else:
+                total = '0%'
             print(f'{"TOTAL": <{max_len}}{stmts: >5}{miss: >7}{total: >7}')
         else:
             print(uncovered_cmd)

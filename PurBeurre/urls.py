@@ -20,5 +20,6 @@ from django.utils.translation import gettext as _
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(_('user/'), include('User.urls', namespace=_('user')),)
+    path(_(''), include('App.urls', namespace=_('app'))),
+    path(_('user/'), include('User.urls', namespace=_('user'))),
 ]

@@ -59,7 +59,10 @@ ROOT_URLCONF = 'PurBeurre.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),
+                 os.path.join(BASE_DIR, 'App', 'templates', 'App'),
+                 os.path.join(BASE_DIR, 'User', 'templates', 'User'),
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -1,6 +1,8 @@
-from typing import Dict, List, Optional
+import json
+from typing import Any, Dict, List, Optional
 from django.db.models.query import QuerySet
-from django.test import TestCase
+from django.http import HttpResponse
+from django.test import Client, TestCase
 from .models import Category, Product
 
 
@@ -86,3 +88,34 @@ class TestCategoryModel(TestCase):
         self.assertEqual(len(Category.objects.all()), 5)
         Category.delete_all()
         self.assertEqual(len(Category.objects.all()), 0)
+
+
+class TestSearchView(TestCase):
+    def setUp(self) -> None:
+        self.client: Client = Client()
+        self.bad_product: Product = Product.objects.create(
+            barcode='789123', name='Bad Product',
+            nutrition_grade='C', url='http://example2.com',
+        )
+        self.good_product: Product = Product.objects.create(
+            barcode='123456', name='Good Product',
+            nutrition_grade='A', url='http://example.com',
+        )
+        self.catego: Category = Category.objects.create(name='Category 1')
+        self.catego.products.add(self.bad_product)
+        self.catego.products.add(self.good_product)
+
+    def test_post_data_result(self) -> None:
+        response: HttpResponse = self.client.post(
+            '/food/search_json',
+            json.dumps({'food_search': 'Test product 2'}),
+            content_type='application/json'
+        )
+        substitutes: List[Dict[str, Any]] = json.loads(response.content)
+        self.assertEqual(substitutes[0]['name'], 'Good Product')
+
+    # def test_post_data_for_search(self) -> None:
+    #     response: HttpResponse = self.client.post('/food/search', {
+    #         'food_search': 'Test product 2'
+    #     })
+    #     self.assertTemplateUsed(response, 'food/products')

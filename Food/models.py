@@ -1,5 +1,6 @@
 from __future__ import annotations
 from typing import List, Sequence, Tuple
+import json
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -49,6 +50,10 @@ class Product(models.Model):
 
     def delete_all() -> None:  # type: ignore
         Product.objects.all().delete()
+
+    @property
+    def to_json(self) -> str:
+        return json.dumps(self.__dict__)
 
 
 class Category(models.Model):

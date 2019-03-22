@@ -1,11 +1,46 @@
 #!/usr/bin/env python3
-from typing import Any
+from typing import Any, Dict, List
 import time
 from django.core.management.base import (BaseCommand, CommandError,
                                          CommandParser)
 from django.db.utils import IntegrityError
 from OpenFoodFacts.api import API
 from Food.models import Category, Product
+
+
+class FoodDbFeeder:
+    def __init__(self, categories: List[str], nb_products: int) -> None:
+        self.categories: List[str] = categories
+        self.nb_products: int = nb_products
+        self.api: API = API()
+
+    def run(self) -> None:
+        Category.delete_all()
+        Product.delete_all()
+        for category_name in self.categories:
+            category: Category = Category.objects.create(name=category_name)
+            self.collect_products(category)
+
+    def collect_products(self, category: Category) -> None:
+        print(f'Collecting {self.nb_products} products for "{category.name}"')
+        page: int = 1
+        while len(category.products.all()) < self.nb_products:
+            self._collect_products(category, page)
+            page += 1
+        print('\n')
+
+    def _collect_products(self, category: Category, page: int) -> None:
+        for product in self.api.search(category.name, page, self.nb_products):
+            if len(category.products.all()) >= self.nb_products:
+                break
+            try:
+                category.products.add(
+                    Product.objects.create(**product.to_food_db)
+                )
+                print('.', end='')
+                time.sleep(.2)
+            except IntegrityError:
+                pass
 
 
 class Command(BaseCommand):
@@ -24,34 +59,11 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args: Any, **options: Any) -> None:
-        self.api: API = API()
         if not options['categories']:
             raise CommandError('At least one --category is required')
-        Category.delete_all()
-        Product.delete_all()
-        for category_name in options['categories']:
-            category: Category = Category.objects.create(name=category_name)
-            self.collect_products(category, options['nb_products'])
-
-    def collect_products(self, category: Category, nb_products: int) -> None:
-        print(f'Collecting {nb_products} products for "{category.name}"')
-        page: int = 1
-        while len(category.products.all()) < nb_products:
-            self._collect_products(category, page, nb_products)
-            page += 1
-        print('\n')
-
-    def _collect_products(
-        self, category: Category, page: int, nb_products: int
-    ) -> None:
-        for product in self.api.search(category.name, page, nb_products):
-            if len(category.products.all()) >= nb_products:
-                break
-            try:
-                category.products.add(
-                    Product.objects.create(**product.to_food_db)
-                )
-                print('.', end='')
-                time.sleep(.2)
-            except IntegrityError:
-                pass
+        if not options['nb_products']:
+            options['nb_products'] = 0
+        food_db_feeder: FoodDbFeeder = FoodDbFeeder(
+            options['categories'], options['nb_products']
+        )
+        food_db_feeder.run()

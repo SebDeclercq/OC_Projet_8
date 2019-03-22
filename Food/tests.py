@@ -32,6 +32,10 @@ class TestProductModel(TestCase):
     def test_substitute_manager(self) -> None:
         top_product: Product = Product.objects.create(**self.data)
         not_so_top_product: Product = Product.objects.create(**self.data2)
+        self.catego: Category = Category.objects.create(name='Category 1')
+        self.catego.products.add(top_product)
+        self.catego.products.add(not_so_top_product)
+        self.catego.save()
         substitutes: QuerySet = Product.get_substitutes_for(
             not_so_top_product
         )

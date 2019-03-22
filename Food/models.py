@@ -43,7 +43,8 @@ class Product(models.Model):
         idx: int = nutrition_grades_scale.index(product.nutrition_grade)
         better_grades: List[str] = nutrition_grades_scale[:idx]
         return Product.objects.filter(
-            nutrition_grade__in=better_grades
+            nutrition_grade__in=better_grades,
+            category=product.category_set.first()
         )
 
     def delete_all() -> None:  # type: ignore

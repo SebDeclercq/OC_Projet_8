@@ -108,11 +108,11 @@ class TestSearchView(TestCase):
     def test_post_data_result(self) -> None:
         response: HttpResponse = self.client.post(
             '/food/search_json',
-            json.dumps({'food_search': 'Test product 2'}),
+            json.dumps({'food_search': 'Bad Product'}),
             content_type='application/json'
         )
         substitutes: List[Dict[str, Any]] = json.loads(response.content)
-        self.assertEqual(substitutes[0]['name'], 'Good Product')
+        self.assertEqual(substitutes[0]['fields']['name'], 'Good Product')
 
     # def test_post_data_for_search(self) -> None:
     #     response: HttpResponse = self.client.post('/food/search', {

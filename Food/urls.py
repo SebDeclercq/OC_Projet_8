@@ -9,4 +9,5 @@ app_name: str = 'food'
 
 urlpatterns: List[path] = [
     path(_('search_json'), views.JsonSearch.as_view(), name=_('search_json')),
+    path(_('search'), views.SearchView.as_view(), name=_('search')),
 ]

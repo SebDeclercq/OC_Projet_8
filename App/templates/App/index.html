@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Bienvenue sur le site Pur Beurre</h1>
-    <form action="{% url "food:search"}" method="POST">
+    <form action="{% url "food:search" %}" method="POST">
         {% csrf_token %}
         <input type="text" name="food_search" id="food_search"
                placeholder="Quel produit voulez-vous substituer ?"

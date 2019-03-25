@@ -1,2 +1,9 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block title %}Liste de substituts{% endblock %}
+{% block content %}
+    {% for s in substitutes %}
+        <p>{{ s }}</p>
+    {% empty %}
+    <p>Pas de substitut trouvé</p>
+    {% endfor %}
+{% endblock %}

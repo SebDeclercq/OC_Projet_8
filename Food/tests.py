@@ -105,24 +105,6 @@ class TestSearchView(TestCase):
         self.catego.products.add(self.bad_product)
         self.catego.products.add(self.good_product)
 
-    def test_post_data_result(self) -> None:
-        response: HttpResponse = self.client.post(
-            '/food/search_json',
-            json.dumps({'food_search': 'Bad Product'}),
-            content_type='application/json'
-        )
-        substitutes: List[Dict[str, Any]] = json.loads(response.content)
-        self.assertEqual(substitutes[0]['fields']['name'], 'Good Product')
-
-    def test_post_data_no_result(self) -> None:
-        response: HttpResponse = self.client.post(
-            '/food/search_json',
-            json.dumps({'food_search': 'XXX'}),
-            content_type='application/json'
-        )
-        substitutes: List[Dict[str, Any]] = json.loads(response.content)
-        self.assertEqual(substitutes, [])
-
     def test_post_data_for_search(self) -> None:
         response: HttpResponse = self.client.post('/food/search', {
             'food_search': 'Bad Product'

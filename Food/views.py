@@ -8,14 +8,15 @@ from django.views.generic import View
 from Food.models import Product
 
 
-class JsonSearch(View):
+class SearchView(View):
+    products_list_template: str = 'Food/products.html'
+
     def post(self, request: HttpRequest) -> HttpResponse:
-        if request.content_type != 'application/json':
-            return JsonResponse([], safe=False)
-        query: Dict[str, str] = json.loads(request.body)
-        return HttpResponse(serializers.serialize(  # type: ignore
-            'json', self.substitute_product(query.get('food_search'))
-        ), content_type='application/json')
+        search: Optional[str] = request.POST.get('food_search')
+        substitutes: List[Product] = []
+        if search is not None:
+            substitutes = self.substitute_product(search)  # type: ignore
+        return render(request, self.products_list_template, locals())
 
     def _find_product(self, product_name: str) -> Optional[Product]:
         products: QuerySet = Product.objects.filter(name=product_name)
@@ -33,15 +34,3 @@ class JsonSearch(View):
             if product is not None:
                 return self._find_substitutes(product)
         return []
-
-
-class SearchView(View):
-    products_list_template: str = 'Food/products.html'
-
-    def post(self, request: HttpRequest) -> HttpResponse:
-        search: Optional[str] = request.POST.get('food_search')
-        substitutes: List[Product] = []
-        if search is not None:
-            json_search: JsonSearch = JsonSearch()
-            substitutes = json_search.substitute_product(search)  # type: ignore # noqa
-        return render(request, self.products_list_template, locals())

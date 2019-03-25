@@ -13,14 +13,8 @@ class JsonSearch(View):
         if request.content_type != 'application/json':
             return JsonResponse([], safe=False)
         query: Dict[str, str] = json.loads(request.body)
-        search: Optional[str] = query.get('food_search')
-        if search is None:
-            return JsonResponse([], safe=False)
-        product: Optional[Product] = self._find_product(search)
-        if not product:
-            return JsonResponse([], safe=False)
-        return HttpResponse(serializers.serialize(
-            'json', self._find_substitutes(product)
+        return HttpResponse(serializers.serialize(  # type: ignore
+            'json', self.substitute_product(query.get('food_search'))
         ), content_type='application/json')
 
     def _find_product(self, product_name: str) -> Optional[Product]:
@@ -49,5 +43,5 @@ class SearchView(View):
         substitutes: List[Product] = []
         if search is not None:
             json_search: JsonSearch = JsonSearch()
-            substitutes = json_search.substitute_product(search)
+            substitutes = json_search.substitute_product(search)  # type: ignore # noqa
         return render(request, self.products_list_template, locals())

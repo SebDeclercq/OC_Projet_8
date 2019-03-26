@@ -110,3 +110,10 @@ class TestSearchView(TestCase):
             'food_search': 'Bad Product'
         })
         self.assertTemplateUsed(response, 'Food/products.html')
+
+    def test_product_urls(self) -> None:
+        response: HttpResponse = self.client.post('/food/search', {
+            'food_search': 'Bad Product'
+        })
+        self.assertContains(response,
+                            f'href="{self.good_product.get_absolute_url}"')

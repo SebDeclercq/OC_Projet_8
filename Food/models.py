@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import List, Sequence, Tuple
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
 
 
 class Product(models.Model):
@@ -49,6 +50,10 @@ class Product(models.Model):
 
     def delete_all() -> None:  # type: ignore
         Product.objects.all().delete()
+
+    @property
+    def get_absolute_url(self) -> str:
+        return reverse('food:product', args=[self.barcode])
 
 
 class Category(models.Model):

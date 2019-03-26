@@ -2,8 +2,8 @@
 {% block title %}Liste de substituts{% endblock %}
 {% block content %}
     {% for s in substitutes %}
-        <p>{{ s }}</p>
+        <p><a href="{{ s.get_absolute_url }}">{{ s.name|safe }}</a></p>
     {% empty %}
-    <p>Pas de substitut trouvé</p>
+    <h2>Pas de substitut trouvé</h2>
     {% endfor %}
 {% endblock %}

@@ -34,3 +34,7 @@ class SearchView(View):
             if product is not None:
                 return self._find_substitutes(product)
         return []
+
+
+class ProductView(View):
+    pass

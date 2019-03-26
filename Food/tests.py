@@ -91,6 +91,8 @@ class TestCategoryModel(TestCase):
 
 
 class TestSearchView(TestCase):
+    URL: str = '/food/search'
+
     def setUp(self) -> None:
         self.client: Client = Client()
         self.bad_product: Product = Product.objects.create(
@@ -106,14 +108,29 @@ class TestSearchView(TestCase):
         self.catego.products.add(self.good_product)
 
     def test_post_data_for_search(self) -> None:
-        response: HttpResponse = self.client.post('/food/search', {
+        response: HttpResponse = self.client.post(self.URL, {
             'food_search': 'Bad Product'
         })
         self.assertTemplateUsed(response, 'Food/products.html')
 
     def test_product_urls(self) -> None:
-        response: HttpResponse = self.client.post('/food/search', {
+        response: HttpResponse = self.client.post(self.URL, {
             'food_search': 'Bad Product'
         })
         self.assertContains(response,
                             f'href="{self.good_product.get_absolute_url}"')
+
+
+class TestProductView(TestCase):
+    def setUp(self) -> None:
+        self.client: Client = Client()
+        self.good_product: Product = Product.objects.create(
+            barcode='123456', name='Good Product',
+            nutrition_grade='A', url='http://example.com',
+        )
+
+    def test_product_detail(self) -> None:
+        response: HttpResponse = self.client.get(
+            self.good_product.get_absolute_url
+        )
+        self.assertTemplateUsed(response, 'Food/details.html')

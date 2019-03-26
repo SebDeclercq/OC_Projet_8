@@ -37,4 +37,11 @@ class SearchView(View):
 
 
 class ProductView(View):
-    pass
+    product_details_template: str = 'Food/details.html'
+
+    def get(self, request: HttpRequest, barcode: str) -> HttpResponse:
+        product: Optional[Product] = Product.objects.filter(
+            barcode=barcode
+        ).first()
+        return render(request, self.product_details_template,
+                      {'product': product})

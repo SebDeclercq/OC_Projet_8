@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Fiche produit{% endblock %}
+{% block content %}
+    <h1>{{ product.name }}</h1>
+    <ul>
+        <li>Code-barre: {{ product.barcode }}</li>
+        <li>Nutriscore: {{ product.nutrition_grade }}</li>
+        <li>URL: {{ product.url }}</li>
+    </ul>
+{% endblock %}

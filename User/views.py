@@ -21,14 +21,14 @@ class LoginView(TemplateView):
         )
         if user is not None and user.is_active:
             login(request, user)
-            return render(request, self.template_name)
+            return redirect('/')
         return render(request, self.template_name, {'wrong_credentials': True})
 
 
 class LogoutView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         logout(request)
-        return redirect('user:login')
+        return redirect('/')
 
 
 class SignUpView(CreateView):

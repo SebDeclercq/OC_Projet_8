@@ -29,15 +29,13 @@ class LogInViewTest(TestCase):
         response: HttpResponse = self.client.post(self.URL, {
             'email': self.user.email, 'password': self.valid_password
         })
-        html: str = response.content.decode('utf8')
-        self.assertIn(f'AS {self.user.email}', html)
+        self.assertRedirects(response, '/')
 
     def test_login_invalid_credentials(self) -> None:
         response: HttpResponse = self.client.post(self.URL, {
             'email': self.user.email, 'password': 'wrong_password'
         })
-        html: str = response.content.decode('utf8')
-        self.assertIn('WRONG CREDENTIALS, PLEASE RETRY', html)
+        self.assertTemplateUsed(response, 'login.html')
 
 
 class SignUpModelTest(TestCase):
@@ -118,4 +116,4 @@ class LogOutViewTest(TestCase):
 
     def test_logout(self) -> None:
         response: HttpResponse = self.client.get(self.URL, follow=True)
-        self.assertEqual(response.redirect_chain[0], (self.LOGIN_URL, 302))
+        self.assertRedirects(response, '/')

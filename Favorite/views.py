@@ -1,3 +1,4 @@
+from django.core import serializers
 from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
@@ -12,19 +13,21 @@ class SaveView(View):
     def post(self, request: HttpRequest) -> HttpResponse:
         user: User = request.user  # type: ignore
         if user.is_authenticated:
+            substituted: QuerySet = Product.objects.filter(
+                barcode=request.POST.get('substituted')
+            )
+            substitute: QuerySet = Product.objects.filter(
+                barcode=request.POST.get('substitute')
+            )
             Favorite.objects.create(
                 user=user,
-                substituted=Product.objects.filter(
-                    barcode=request.POST.get('substituted')
-                ).first(),
-                substitute=Product.objects.filter(
-                    barcode=request.POST.get('substitute')
-                ).first()
+                substituted=substituted.first(),
+                substitute=substitute.first()
             )
             return JsonResponse({
                 'status': 'success',
-                'substitute': request.POST.get('substitute'),
-                'substituted': request.POST.get('substituted')
+                'substitute': serializers.serialize('json', substitute)[1:-1],  # type: ignore # noqa
+                'substituted': serializers.serialize('json', substituted)[1:-1]  # type: ignore # noqa
             })
         return JsonResponse({'status': 'error'})
 

@@ -1,7 +1,6 @@
 from typing import Dict, List, Optional, Union
 import json
 from django.db.models.query import QuerySet
-from django.core import serializers
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.generic import View

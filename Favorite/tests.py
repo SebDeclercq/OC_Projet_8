@@ -1,3 +1,4 @@
+import json
 from django.db.utils import IntegrityError
 from django.http import HttpResponse
 from django.test import Client, TestCase
@@ -89,19 +90,16 @@ class TestFavoriteView(TestCase):
             'substituted': self.bad_product.barcode,
             'substitute': self.good_product.barcode
         })
-        self.assertJSONEqual(response.content.decode('utf-8'), {
-            'status': 'success', 'substitute': self.good_product.barcode,
-            'substituted': self.bad_product.barcode
-        })
+        status: str = json.loads(response.content.decode('utf-8'))['status']
+        self.assertEqual(status, 'success')
 
     def test_insert_new_favorite_no_user(self) -> None:
         response: HttpResponse = self.client.post(self.URL, {
             'substituted': self.bad_product.barcode,
             'substitute': self.good_product.barcode
         })
-        self.assertJSONEqual(response.content.decode('utf-8'), {
-            'status': 'error'
-        })
+        status: str = json.loads(response.content.decode('utf-8'))['status']
+        self.assertEqual(status, 'error')
 
 
 class FavoriteListViewTest(TestCase):

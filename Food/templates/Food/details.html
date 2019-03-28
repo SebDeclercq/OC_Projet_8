@@ -1,10 +1,16 @@
 {% extends "base.html" %}
 {% block title %}Fiche produit{% endblock %}
 {% block content %}
-    <h1>{{ product.name }}</h1>
-    <ul>
-        <li>Code-barre: {{ product.barcode }}</li>
-        <li>Nutriscore: {{ product.nutrition_grade }}</li>
-        <li>URL: {{ product.url }}</li>
+    <h1>{{ substitute.name }}</h1>
+    <ul style="list-style: none;">
+        <li>Code-barre: {{ substitute.barcode }}</li>
+        <li>Nutriscore: {{ substitute.nutrition_grade }}</li>
+        <li>URL: {{ substitute.url }}</li>
     </ul>
+    <form style="display: inline-block;" action="{% url "favorite:save" %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="substitute" value="{{ substitute.barcode }}"/>
+        <input type="hidden" name="substituted" value="{{ substituted.barcode }}"/>
+        <input type="submit" value="Sauvegarder" />
+    </form>
 {% endblock %}

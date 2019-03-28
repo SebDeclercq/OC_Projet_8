@@ -15,7 +15,7 @@ class SearchView(View):
         search: Optional[str] = request.POST.get('food_search')
         substitutes: List[Product] = []
         if search is not None:
-            substitutes = self.substitute_product(search)  # type: ignore
+            substituted, substitutes = self.substitute_product(search)  # type: ignore  # noqa
         return render(request, self.products_list_template, locals())
 
     def _find_product(self, product_name: str) -> Optional[Product]:
@@ -28,20 +28,25 @@ class SearchView(View):
 
     def substitute_product(
         self, search: Optional[str]
-    ) -> Union[QuerySet, List[Product]]:
+    ) -> Union[QuerySet, List[None]]:
         if search is not None:
             product: Optional[Product] = self._find_product(search)
             if product is not None:
-                return self._find_substitutes(product)
-        return []
+                return product, self._find_substitutes(product)
+        return [None, None]
 
 
 class ProductView(View):
     product_details_template: str = 'Food/details.html'
 
-    def get(self, request: HttpRequest, barcode: str) -> HttpResponse:
-        product: Optional[Product] = Product.objects.filter(
-            barcode=barcode
+    def get(
+        self, request: HttpRequest, substitute_barcode: str,
+        substituted_barcode: str
+    ) -> HttpResponse:
+        substitute: Optional[Product] = Product.objects.filter(
+            barcode=substitute_barcode
         ).first()
-        return render(request, self.product_details_template,
-                      {'product': product})
+        substituted: Optional[Product] = Product.objects.filter(
+            barcode=substituted_barcode
+        ).first()
+        return render(request, self.product_details_template, locals())

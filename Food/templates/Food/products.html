@@ -2,7 +2,11 @@
 {% block title %}Liste de substituts{% endblock %}
 {% block content %}
     {% for s in substitutes %}
-        <p><a href="{{ s.get_absolute_url }}">{{ s.name|safe }}</a></p>
+        <p>
+            <a href="{% url "food:product" substitute_barcode=s.barcode substituted_barcode=substituted.barcode %}">
+                {{ s.name|safe }}
+            </a>
+        </p>
     {% empty %}
     <h2>Pas de substitut trouvé</h2>
     {% endfor %}

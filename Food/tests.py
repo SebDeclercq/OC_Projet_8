@@ -117,8 +117,7 @@ class TestSearchView(TestCase):
         response: HttpResponse = self.client.post(self.URL, {
             'food_search': 'Bad Product'
         })
-        self.assertContains(response,
-                            f'href="{self.good_product.get_absolute_url}"')
+        self.assertContains(response, self.good_product.name)
 
 
 class TestProductView(TestCase):

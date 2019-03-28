@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Liste des favoris{% endblock %}
+{% block content %}
+    <h1>Liste des favoris</h1>
+    <ul>
+    {% for f in favorites %}
+        <li>"{{ f.substitute.name }}" substitue "{{f.substituted.name}}"</li>
+    {% empty %}
+    <h2>Pas de favori sauvegardé</h2>
+    {% endfor %}
+    <ul>
+{% endblock %}

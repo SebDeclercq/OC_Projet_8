@@ -9,4 +9,5 @@ app_name: str = 'favorite'
 
 urlpatterns: List[path] = [
     path(_('save'), views.SaveView.as_view(), name=_('save')),
+    path(_('list'), views.FavoriteListView.as_view(), name=_('list')),
 ]

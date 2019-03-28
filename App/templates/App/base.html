@@ -6,22 +6,26 @@
         <title>{% block title %}{% endblock %}</title>
     </head>
     <body style="width: 100%; text-align:center;">
-        <div id="account">
+        <div id="account" style="margin-bottom: 2%">
+            {% if user.is_authenticated %}
+            <p>{{ user.email }}</p>
+            <form action="{% url "user:logout" %}">
+                <input type="submit" value="Log out" />
+            </form>
+            {% else %}
             <form style="display: inline-block;" action="{% url "user:login" %}">
                 <input type="submit" value="Log in" />
-            </form>
-            <form style="display: inline-block;" action="{% url "user:logout" %}">
-                <input type="submit" value="Log out" />
             </form>
             <form style="display: inline-block;" action="{% url "user:signup" %}">
                 <input type="submit" value="Sign up" />
             </form>
-            {% if user.is_authenticated %}
-            <p  style="display: inline-block;">{{ user.email }}</p>
             {% endif %}
         </div>
         <div class="nav" style="margin-bottom: 5%">
             <a href="/">Home</a>
+            {% if user.is_authenticated %}
+            <a href="{% url "favorite:list" %}">Favoris</a>
+            {% endif %}
         </div>
         <div id="content" style="display:inline-block">
             {% block content %}

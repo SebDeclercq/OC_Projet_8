@@ -82,3 +82,32 @@ class TestFavoriteView(TestCase):
             'substitute': self.good_product.barcode
         })
         self.assertEqual(Favorite.objects.filter(user=self.user).count(), 1)
+
+
+class FavoriteListViewTest(TestCase):
+    URL: str = '/favorite/list'
+
+    def setUp(self) -> None:
+        self.email: str = 'az@er.ty'
+        self.password: str = 'azerty'
+        self.user: User = User.objects.create_user(
+            email=self.email, password=self.password
+        )
+        self.bad_product: Product = Product.objects.create(
+            barcode='789123', name='Test product 2',
+            nutrition_grade='C', url='http://example2.com',
+        )
+        self.good_product: Product = Product.objects.create(
+            barcode='123456', name='Test product',
+            nutrition_grade='A', url='http://example.com',
+        )
+        self.favorite: Favorite = Favorite.objects.create(
+            substituted=self.bad_product,
+            substitute=self.good_product,
+            user=self.user
+        )
+
+    def test_favorites_list_template(self) -> None:
+        self.client.login(username=self.email, password=self.password)
+        response: HttpResponse = self.client.get(self.URL)
+        self.assertTemplateUsed(response, 'Favorite/list.html')

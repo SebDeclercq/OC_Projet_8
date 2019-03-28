@@ -23,4 +23,5 @@ urlpatterns = [
     path(_(''), include('App.urls', namespace=_('app'))),
     path(_('user/'), include('User.urls', namespace=_('user'))),
     path(_('food/'), include('Food.urls', namespace=_('food'))),
+    path(_('favorite/'), include('Favorite.urls', namespace=_('favorite'))),
 ]

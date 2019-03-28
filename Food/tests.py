@@ -127,9 +127,14 @@ class TestProductView(TestCase):
             barcode='123456', name='Good Product',
             nutrition_grade='A', url='http://example.com',
         )
+        self.bad_product: Product = Product.objects.create(
+            barcode='789123', name='Bad Product',
+            nutrition_grade='C', url='http://example2.com',
+        )
 
     def test_product_detail(self) -> None:
         response: HttpResponse = self.client.get(
-            self.good_product.get_absolute_url
+            '/food/product/'
+            f'{self.good_product.barcode}/{self.bad_product.barcode}'
         )
         self.assertTemplateUsed(response, 'Food/details.html')

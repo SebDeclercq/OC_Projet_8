@@ -1,6 +1,7 @@
 from django.db.models.query import QuerySet
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.generic import View
 from Favorite.models import Favorite
 from Food.models import Product
@@ -20,7 +21,12 @@ class SaveView(View):
                     barcode=request.POST.get('substitute')
                 ).first()
             )
-        return HttpResponse()
+            return JsonResponse({
+                'status': 'success',
+                'substitute': request.POST.get('substitute'),
+                'substituted': request.POST.get('substituted')
+            })
+        return JsonResponse({'status': 'error'})
 
 
 class FavoriteListView(View):
@@ -32,6 +38,8 @@ class FavoriteListView(View):
             favorites: QuerySet = Favorite.objects.filter(
                 user=user
             ).all()
-        return render(request, self.favorites_list_template, {
-            'favorites': favorites
-        })
+            return render(request, self.favorites_list_template, {
+                'favorites': favorites
+            })
+        else:
+            return redirect(reverse('user:login'))

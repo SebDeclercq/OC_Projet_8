@@ -83,6 +83,26 @@ class TestFavoriteView(TestCase):
         })
         self.assertEqual(Favorite.objects.filter(user=self.user).count(), 1)
 
+    def test_insert_new_favorite_response(self) -> None:
+        self.client.login(username=self.email, password=self.password)
+        response: HttpResponse = self.client.post(self.URL, {
+            'substituted': self.bad_product.barcode,
+            'substitute': self.good_product.barcode
+        })
+        self.assertJSONEqual(response.content.decode('utf-8'), {
+            'status': 'success', 'substitute': self.good_product.barcode,
+            'substituted': self.bad_product.barcode
+        })
+
+    def test_insert_new_favorite_no_user(self) -> None:
+        response: HttpResponse = self.client.post(self.URL, {
+            'substituted': self.bad_product.barcode,
+            'substitute': self.good_product.barcode
+        })
+        self.assertJSONEqual(response.content.decode('utf-8'), {
+            'status': 'error'
+        })
+
 
 class FavoriteListViewTest(TestCase):
     URL: str = '/favorite/list'
@@ -111,3 +131,7 @@ class FavoriteListViewTest(TestCase):
         self.client.login(username=self.email, password=self.password)
         response: HttpResponse = self.client.get(self.URL)
         self.assertTemplateUsed(response, 'Favorite/list.html')
+
+    def test_no_user(self) -> None:
+        response: HttpResponse = self.client.get(self.URL)
+        self.assertRedirects(response, '/user/login')

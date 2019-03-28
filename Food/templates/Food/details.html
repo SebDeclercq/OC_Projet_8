@@ -7,10 +7,12 @@
         <li>Nutriscore: {{ substitute.nutrition_grade }}</li>
         <li>URL: {{ substitute.url }}</li>
     </ul>
+    {% if user.is_authenticated %}
     <form style="display: inline-block;" action="{% url "favorite:save" %}" method="POST">
         {% csrf_token %}
         <input type="hidden" name="substitute" value="{{ substitute.barcode }}"/>
         <input type="hidden" name="substituted" value="{{ substituted.barcode }}"/>
         <input type="submit" value="Sauvegarder" />
     </form>
+    {% endif %}
 {% endblock %}

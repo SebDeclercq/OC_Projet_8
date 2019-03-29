@@ -1,5 +1,6 @@
-from django.core import serializers
+from typing import Optional
 from django.db.models.query import QuerySet
+from django.forms.models import model_to_dict
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -13,21 +14,21 @@ class SaveView(View):
     def post(self, request: HttpRequest) -> HttpResponse:
         user: User = request.user  # type: ignore
         if user.is_authenticated:
-            substituted: QuerySet = Product.objects.filter(
+            substituted: Optional[Product] = Product.objects.filter(
                 barcode=request.POST.get('substituted')
-            )
-            substitute: QuerySet = Product.objects.filter(
+            ).first()
+            substitute: Optional[Product] = Product.objects.filter(
                 barcode=request.POST.get('substitute')
-            )
+            ).first()
             Favorite.objects.create(
                 user=user,
-                substituted=substituted.first(),
-                substitute=substitute.first()
+                substituted=substituted,
+                substitute=substitute
             )
             return JsonResponse({
                 'status': 'success',
-                'substitute': serializers.serialize('json', substitute)[1:-1],  # type: ignore # noqa
-                'substituted': serializers.serialize('json', substituted)[1:-1]  # type: ignore # noqa
+                'substitute': model_to_dict(substitute),  # type: ignore
+                'substituted': model_to_dict(substituted)  # type: ignore
             })
         return JsonResponse({'status': 'error'})
 

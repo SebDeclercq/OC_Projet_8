@@ -49,3 +49,12 @@ class ProductView(View):
             barcode=substituted_barcode
         ).first()
         return render(request, self.product_details_template, locals())
+
+
+class AjaxView(View):
+    def get(self, request: HttpRequest) -> HttpResponse:
+        results: List[str] = []
+        query: str = request.GET.get('term', '')
+        for r in Product.objects.filter(name__icontains=query):
+            results.append(r.name)
+        return JsonResponse(results, safe=False)

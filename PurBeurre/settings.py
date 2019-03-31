@@ -25,7 +25,7 @@ SECRET_KEY = 'h*u_9fsi*h_7f&_)4%v_#o1rkz3-regppdpu@u^e*hi@-$x)04'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'Food.apps.FoodConfig',
     'Favorite.apps.FavoriteConfig',
     'OpenFoodFacts',
+    'App.apps.AppConfig',
 ]
 
 MIDDLEWARE = [

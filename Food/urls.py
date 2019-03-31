@@ -11,4 +11,5 @@ urlpatterns: List[path] = [
     path(_('search'), views.SearchView.as_view(), name=_('search')),
     path(_('product/<int:substitute_barcode>/<int:substituted_barcode>'),
          views.ProductView.as_view(), name=_('product')),
+    path(_('ajax'), views.AjaxView.as_view(), name=_('ajax')),
 ]

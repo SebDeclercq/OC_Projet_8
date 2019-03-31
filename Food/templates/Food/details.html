@@ -1,5 +1,8 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block title %}Fiche produit{% endblock %}
+
 {% block content %}
     <h1>{{ substitute.name }}</h1>
     <ul style="list-style: none;">
@@ -8,11 +11,15 @@
         <li>URL: {{ substitute.url }}</li>
     </ul>
     {% if user.is_authenticated %}
-    <form style="display: inline-block;" action="{% url "favorite:save" %}" method="POST">
+    <form class="save" style="display: inline-block;" action="{% url "favorite:save" %}" method="POST">
         {% csrf_token %}
         <input type="hidden" name="substitute" value="{{ substitute.barcode }}"/>
         <input type="hidden" name="substituted" value="{{ substituted.barcode }}"/>
         <input type="submit" value="Sauvegarder" />
     </form>
     {% endif %}
+{% endblock %}
+
+{% block bottom_scripts %}
+<script src="{% static "js/save-form.js" %}" charset="utf-8"></script>
 {% endblock %}

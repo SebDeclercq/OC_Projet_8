@@ -2,8 +2,7 @@ from typing import Optional
 from django.db.models.query import QuerySet
 from django.forms.models import model_to_dict
 from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.shortcuts import render
 from django.views.generic import View
 from Favorite.models import Favorite
 from Food.models import Product
@@ -38,12 +37,9 @@ class FavoriteListView(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         user: User = request.user  # type: ignore
-        if user.is_authenticated:
-            favorites: QuerySet = Favorite.objects.filter(
-                user=user
-            ).all()
-            return render(request, self.favorites_list_template, {
-                'favorites': favorites
-            })
-        else:
-            return redirect(reverse('user:login'))
+        favorites: QuerySet = Favorite.objects.filter(
+            user=user
+        ).all()
+        return render(request, self.favorites_list_template, {
+            'favorites': favorites
+        })

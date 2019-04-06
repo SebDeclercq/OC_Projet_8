@@ -130,3 +130,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'User.User'
+
+LOGIN_URL: str = '/user/login'

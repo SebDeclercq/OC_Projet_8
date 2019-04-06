@@ -11,6 +11,7 @@ class TestProductModel(TestCase):
         self.data: Dict[str, str] = dict(
             barcode='123456', name='Test product',
             nutrition_grade='A', url='http://example.com',
+            img='http://example.jpg', nutrition_img='http://example.jpg',
         )
         self.data2: Dict[str, str] = dict(
             barcode='789123', name='Test product 2',

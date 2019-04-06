@@ -15,6 +15,8 @@ class Product:
     name: str
     nutrition_grades: str
     url: str
+    image_url: str
+    image_nutrition_small_url: str
 
     @property
     def to_food_db(self) -> Dict[str, str]:
@@ -23,8 +25,18 @@ class Product:
             'name': self.name,
             'nutrition_grade': self.nutrition_grades.upper(),
             'url': self.url,
+            'img': self._full_image_url,
+            'nutrition_img': self._image_nutrition_url
         }
 
+    @property
+    def _full_image_url(self) -> str:
+        return re.sub(r'\.\d+\.jpg$', '.full.jpg', self.image_url)
+
+    @property
+    def _image_nutrition_url(self) -> str:
+        return re.sub(r'\.\d+\.jpg$', '.full.jpg',
+                      self.image_nutrition_small_url)
 
 class API:
     '''Class interfacing the App and the OpenFoodFacts's API

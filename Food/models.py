@@ -25,6 +25,10 @@ class Product(models.Model):
         max_length=1
     )
     url: models.URLField = models.URLField(_('url'), blank=False, unique=True)
+    img: models.URLField = models.URLField(_('img'), blank=True)
+    nutrition_img: models.URLField = models.URLField(
+        _('nutrition_img'), blank=True
+    )
 
     objects: models.Manager = models.Manager()
 

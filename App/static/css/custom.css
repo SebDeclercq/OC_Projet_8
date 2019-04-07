@@ -1,8 +1,11 @@
-/* NAV */
-nav {
-    margin: 1%;
+/* HEADER */
+header {
     width: 100%;
+    background-color: #f5f5f5;
+    font-size: 12pt;
+    position: absolute;
 }
+/* NAV */
 img#logo {
     width: 40px;
     height: 40px;
@@ -19,4 +22,16 @@ input#nav_food_search {
 nav a {
     color: black;
     font-size: 15pt;
+}
+/* FOOTER */
+footer {
+    padding: 2%;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #f5f5f5;
+    font-size: 12pt;
+}
+footer a {
+    color: black;
 }

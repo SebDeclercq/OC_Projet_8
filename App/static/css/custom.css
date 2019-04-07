@@ -3,9 +3,12 @@ header {
     width: 100%;
     background-color: #f5f5f5;
     font-size: 12pt;
-    position: absolute;
 }
 /* NAV */
+nav {
+    position: absolute;
+    width: 100%;
+}
 img#logo {
     width: 40px;
     height: 40px;

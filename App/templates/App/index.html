@@ -1,23 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block head_links %}
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-{% endblock %}
-
-{% block head_scripts %}
-<script
-    src="http://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous">
-</script>
-<script
-    src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-    crossorigin="anonymous">
-</script>
-{% endblock %}
-
 {% block title %}Pur Beurre{% endblock %}
 
 {% block content %}
@@ -33,8 +16,7 @@
             <p class="text-white-75 font-weight-light mb-5">Trouvez un produit de substitution pour ceux que vous consommez tous les jours.</p>
             <form action="{% url "food:search" %}" method="POST">
                 {% csrf_token %}
-                <input type="text" name="food_search" id="food_search"
-                       placeholder="Produit"/>
+                <input type="text" name="food_search" id="food_search" placeholder="Produit"/>
                 <input type="submit" value="Chercher"/>
             </form>
         </div>
@@ -118,9 +100,4 @@
     </div>
   </div>
 </section>
-{% endblock %}
-
-
-{% block bottom_scripts %}
-<script src="{% static "js/ajax-search.js" %}" charset="utf-8"></script>
 {% endblock %}

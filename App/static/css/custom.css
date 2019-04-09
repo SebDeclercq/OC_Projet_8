@@ -1,40 +1,8 @@
-/* HEADER */
-header {
-    width: 100%;
-    background-color: #f5f5f5;
-    font-size: 12pt;
-}
-/* NAV */
-nav {
-    position: absolute;
-    width: 100%;
-}
 img#logo {
     width: 40px;
     height: 40px;
 }
-#logo-text {
-    font-size: 15pt;
-    font-weight: bold;
-    vertical-align: middle;
-}
 input#nav_food_search {
     width: 100%;
-    font-size: 12pt;
-}
-nav a {
-    color: black;
-    font-size: 15pt;
-}
-/* FOOTER */
-footer {
-    padding: 2%;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: #f5f5f5;
-    font-size: 12pt;
-}
-footer a {
-    color: black;
+    font-size: 10pt;
 }

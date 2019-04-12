@@ -34,3 +34,8 @@ q {
     margin: 0 auto;
     margin-bottom: 2%;
 }
+/* PRODUCT DETAILS */
+#picture {
+     background-repeat: no-repeat;
+     background-position: top;
+}

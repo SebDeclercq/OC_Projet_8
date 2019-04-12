@@ -1,3 +1,4 @@
+/* BASE */
 img#logo {
     width: 40px;
     height: 40px;
@@ -5,4 +6,25 @@ img#logo {
 input#nav_food_search {
     width: 100%;
     font-size: 10pt;
+}
+/* INDEX */
+.cook-name {
+    font-weight: bold;
+}
+q {
+    font-style: italic;
+}
+.cook-picture {
+    height: 100%;
+    width: auto;
+}
+@media (max-width: 600px) {
+    .cook-picture-container {
+        height: 50px;
+    }
+}
+@media (min-width: 600px) {
+    .cook-picture-container {
+        height: 150px;
+    }
 }

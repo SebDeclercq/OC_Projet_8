@@ -13,7 +13,18 @@
       </div>
     <div class="row">
         {% for s in substitutes %}
-            <div class="col-lg-4 ml-auto text-center">
+            <div class="col-lg-4 ml-auto text-center image-wrapper">
+                {% if s.nutrition_grade in 'A,B'|make_list %}
+                <p class="nutriscore bg-success text-white">
+                {% elif s.nutrition_grade in 'C,D'|make_list %}
+                <p class="nutriscore bg-warning text-white">
+                {% elif s.nutrition_grade == 'E' %}
+                <p class="nutriscore bg-danger text-white">
+                {% else %}
+                <p class="nutriscore">
+                {% endif %}
+                    {{ s.nutrition_grade }}
+                </p>
                 <a href="{% url "food:product" substitute_barcode=s.barcode substituted_barcode=substituted.barcode %}">
                     <img src="{{ s.img|resize_img:200 }}" alt="">
                     <p>{{ s.name|safe }}</p>

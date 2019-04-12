@@ -50,3 +50,17 @@ q {
     width: 50%;
     margin: 0 auto;
 }
+.nutriscore {
+    width: 6%;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: bold;
+}
+.image-wrapper {
+    position: relative;
+}
+.image-wrapper p.nutriscore {
+    position: absolute;
+    right: 25%;
+    top: -5%;
+}

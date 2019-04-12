@@ -8,3 +8,10 @@ class IndexView(View):
 
     def get(self, request: HttpRequest) -> HttpResponse:
         return render(request, self.template_name)
+
+
+class LegalNoticeView(View):
+    template_name: str = 'legal_notice.html'
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        return render(request, self.template_name)

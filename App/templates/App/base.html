@@ -54,7 +54,7 @@
               <form class="form-inline"
               action="{% url "food:search" %}" method="POST">
                   {% csrf_token %}
-                  <input class="form-control" type="text"
+                  <input class="form-control food_search" type="text"
                   name="food_search" placeholder="Chercher"
                   aria-label="Chercher" id="nav_food_search">
               </form>
@@ -94,6 +94,9 @@
       <div class="small text-center text-muted">Copyright &copy; 2019 - Start Bootstrap</div>
     </div>
   </footer>
+  <!-- jQuery JS -->
+  <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+
   <!-- jQuery-UI -->
   <script
   src="http://code.jquery.com/jquery-3.3.1.min.js"
@@ -107,13 +110,11 @@
   </script>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
   <script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
 
   <!-- Plugin JavaScript -->
   <script src="{% static "vendor/jquery-easing/jquery.easing.min.js" %}"></script>
   <script src="{% static "vendor/magnific-popup/jquery.magnific-popup.min.js" %}"></script>
-
 
   <!-- Custom scripts for this template -->
   <script src="{% static "js/creative.min.js" %}"></script>

@@ -16,8 +16,12 @@
             <p class="text-white-75 font-weight-light mb-5">Trouvez un produit de substitution pour ceux que vous consommez tous les jours.</p>
             <form action="{% url "food:search" %}" method="POST">
                 {% csrf_token %}
-                <input type="text" name="food_search" id="food_search" placeholder="Produit"/>
-                <input type="submit" value="Chercher"/>
+                <div class="input-group">
+                    <input type="text" class="form-control food_search" name="food_search" placeholder="Produit">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit" value="Chercher">Chercher</button>
+                    </div>
+                </div>
             </form>
         </div>
       </div>

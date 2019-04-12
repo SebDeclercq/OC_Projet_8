@@ -45,3 +45,8 @@ q {
 #save-product {
     margin-top: 2%;
 }
+/* SUBSTITUTES  LISTS */
+#no-result {
+    width: 50%;
+    margin: 0 auto;
+}

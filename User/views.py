@@ -46,3 +46,10 @@ class SignUpView(CreateView):
         if user is not None and user.is_active:
             login(self.request, user)
         return valid
+
+
+class AccountView(View):
+    template_name: str = 'account.html'
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        return render(request, self.template_name)

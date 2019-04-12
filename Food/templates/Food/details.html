@@ -19,23 +19,17 @@
 
 <section class="page-section" id="contact">
   <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8 text-center">
-        <h2 class="mt-0">Contactez-nous !</h2>
-        <hr class="divider my-4">
-        <p class="text-muted mb-5">Une question ? Un commentaire ? Nous sommes disponibles !</p>
-      </div>
-    </div>
     <div class="row">
       <div class="col-lg-4 ml-auto text-center">
-        <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
-        <div>+33 (0)0.00.00.00.00</div>
+        <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{ substitute.nutrition_grade|lower }}.png" alt="">
       </div>
       <div class="col-lg-4 mr-auto text-center">
-        <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
-        <a class="d-block" href="mailto:contact@purbeurre.fr">contact@purbeurre.fr</a>
+          <img src="{{ substitute.nutrition_img|resize_img:200 }}" alt="">
       </div>
     </div>
+    <div class="row" id="url-off">
+        <div class="col-lg-12 text-center">
+            <h3><a href="{{ substitute.url }}">Plus d'infos</a></h3>
   </div>
 </section>
 

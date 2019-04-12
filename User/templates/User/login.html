@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Log in{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block content %}
 <!-- Masthead -->
@@ -27,6 +27,13 @@
                   </div>
                   <input class="btn btn-primary" type="submit" value="Connexion"/>
               </form>
+              <hr class="divider my-4">
+              <div class="col-lg-12 align-self-end">
+                <h2 class="text-uppercase text-white font-weight-bold">Pas encore inscrit ?</h2>
+                <form action="{% url 'user:signup' %}">
+                    <button type="submit" class="btn btn-success">Cliquez ici</button>
+                </form>
+              </div>
         </div>
       </div>
     </div>

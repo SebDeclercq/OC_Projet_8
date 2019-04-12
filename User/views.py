@@ -35,7 +35,7 @@ class SignUpView(CreateView):
     model: Type[User] = User
     template_name: str = 'signup.html'
     form_class: Type[SignUpForm] = SignUpForm
-    success_url: str = 'login'
+    success_url: str = '/'
 
     def form_valid(self, form: SignUpForm) -> HttpResponseRedirect:
         valid = super(SignUpView, self).form_valid(form)

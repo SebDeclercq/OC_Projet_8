@@ -13,7 +13,7 @@
       </div>
     <div class="row">
         {% for s in substitutes %}
-            <div class="col-lg-4 ml-auto text-center image-wrapper">
+            <div class="col-lg-4 ml-auto text-center">
                 {% if s.nutrition_grade in 'A,B'|make_list %}
                 <p class="nutriscore bg-success text-white">
                 {% elif s.nutrition_grade in 'C,D'|make_list %}

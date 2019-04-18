@@ -66,7 +66,7 @@
           </li>
           <li class="nav-item">
               <a href="{% url "favorite:list" %}" class="nav-link">
-                  <img src="{% static "img/carrot.svg" %}"
+                  <img id="carrot" src="{% static "img/carrot_black.svg" %}"
                        witdh="25" height="34" alt="Mes aliments"/></a>
           </li>
           <li class="nav-item">
@@ -128,6 +128,33 @@
   <!-- Custom scripts for this template -->
   <script src="{% static "js/creative.min.js" %}"></script>
   <script src="{% static "js/ajax-search.js" %}"></script>
+
+  <script>
+      class CarrotSwitcher {
+          constructor() {
+              this.mainNav = document.querySelector('#mainNav');
+              this.carrot = document.querySelector('img#carrot');
+              this.carrot_black = '{% static "img/carrot_black.svg" %}';
+              this.carrot_white = '{% static "img/carrot_white.svg" %}';
+          }
+          switch() {
+              if (this.mainNav.classList.contains('navbar-scrolled')) {
+                  this.carrot.src = this.carrot_black;
+              }
+              else {
+                  this.carrot.src = this.carrot_white;
+              }
+          }
+      }
+      window.addEventListener('load', () => {
+         let switcher = new CarrotSwitcher();
+         switcher.switch();
+         window.addEventListener('scroll', () => {
+            switcher.switch();
+         });
+
+      });
+  </script>
 
   {% block bottom_scripts %}
 

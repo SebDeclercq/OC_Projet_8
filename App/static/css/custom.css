@@ -95,3 +95,11 @@ p.nutriscore {
     height: 160px;
     object-fit: cover;
 }
+@media (min-width: 992px) {
+    .product-name {
+        height: 50px;
+    }
+    .save-product {
+        margin-bottom: 5px;
+    }
+}

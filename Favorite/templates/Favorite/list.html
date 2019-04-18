@@ -13,7 +13,7 @@
       </div>
     <div class="row">
         {% for f in favorites %}
-            <div class="col-lg-4 ml-auto text-center">
+            <div class="col-lg-4 text-center">
                 {% if f.substitute.nutrition_grade in 'A,B'|make_list %}
                 <p class="nutriscore bg-success text-white">
                 {% elif f.substitute.nutrition_grade in 'C,D'|make_list %}

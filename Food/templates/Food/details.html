@@ -46,3 +46,15 @@
   {% endif %}
 </section>
 {% endblock %}
+
+{% block bottom_scripts %}
+    <script>
+        window.addEventListener('load', () => {
+            let mainNav = document.querySelector('#mainNav')
+            mainNav.classList.add('navbar-scrolled');
+            window.addEventListener('scroll', () => {
+                mainNav.classList.add('navbar-scrolled');
+            })
+        })
+    </script>
+{% endblock %}

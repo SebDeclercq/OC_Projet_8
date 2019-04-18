@@ -32,6 +32,20 @@ class SaveView(View):
         return JsonResponse({'status': 'error'})
 
 
+class DeleteView(View):
+    def post(self, request: HttpRequest) -> HttpResponse:
+        user: User = request.user  # type: ignore
+        if user.is_authenticated:
+            favorite: QuerySet = Favorite.objects.filter(
+                    user=user,
+                    substituted__barcode=request.POST.get('substituted'),
+                    substitute__barcode=request.POST.get('substitute'),
+            )
+            favorite.delete()
+            return JsonResponse({'status': 'success'})
+        return JsonResponse({'status': 'error'})
+
+
 class FavoriteListView(View):
     favorites_list_template: str = 'Favorite/list.html'
 

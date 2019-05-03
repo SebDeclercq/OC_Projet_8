@@ -89,6 +89,7 @@ class SignUpViewTest(TestCase):
     def setUp(self) -> None:
         self.client: Client = Client()
         self.data: Dict[str, str] = {
+            'firstname': 'Azerty',
             'password1': 'azerty',
             'password2': 'azerty',
             'email': 'az@er.ty'

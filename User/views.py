@@ -37,9 +37,10 @@ class SignUpView(CreateView):
     form_class: Type[SignUpForm] = SignUpForm
     success_url: str = '/'
 
-    def form_valid(self, form: SignUpForm) -> HttpResponseRedirect:
+    def form_valid(self, form: SignUpForm) -> HttpResponse:
         valid = super(SignUpView, self).form_valid(form)
         user: Optional[User] = authenticate(  # type: ignore
+            firstname=form.cleaned_data.get('firstname'),
             username=form.cleaned_data.get('email'),
             password=form.cleaned_data.get('password1')
         )

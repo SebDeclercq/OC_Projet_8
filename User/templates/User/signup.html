@@ -15,7 +15,10 @@
               <form action="" id="signup" method='POST'>
                   {% csrf_token %}
                   <div class="form-group">
-                      <input type="text" class="form-control" name="email" placeholder="Email">
+                      <input type="text" class="form-control" name="firstname" placeholder="Prénom">
+                  </div>
+                  <div class="form-group">
+                      <input type="email" class="form-control" name="email" placeholder="Email">
                   </div>
                   <div class="form-group">
                       <input type="password" class="form-control" name="password1" placeholder="Mot de passe">

@@ -36,4 +36,4 @@ class AdminForm(forms.ModelForm):
 class SignUpForm(AdminForm):
     class Meta:
         model: Type[User] = User
-        fields: Sequence[str] = ('email',)
+        fields: Sequence[str] = ('email', 'firstname',)

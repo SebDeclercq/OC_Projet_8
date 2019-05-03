@@ -132,4 +132,4 @@ class FavoriteListViewTest(TestCase):
 
     def test_no_user(self) -> None:
         response: HttpResponse = self.client.get(self.URL)
-        self.assertRedirects(response, '/user/login')
+        self.assertRedirects(response, '/user/login?next={self.URL}')

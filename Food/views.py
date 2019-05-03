@@ -5,6 +5,8 @@ from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.generic import View
 from Food.models import Product
+from User.models import User
+from Favorite.models import Favorite
 
 
 class SearchView(View):
@@ -48,6 +50,12 @@ class ProductView(View):
         substituted: Optional[Product] = Product.objects.filter(
             barcode=substituted_barcode
         ).first()
+        user: User = request.user  # type: ignore
+        if user.is_authenticated:
+            if Favorite.objects.filter(user=user, substitute=substitute):
+                is_favorite: bool = True
+            else:
+                is_favorite = False
         return render(request, self.product_details_template, locals())
 
 

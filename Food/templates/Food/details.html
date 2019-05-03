@@ -39,7 +39,11 @@
               {% csrf_token %}
               <input type="hidden" name="substitute" value="{{ substitute.barcode }}"/>
               <input type="hidden" name="substituted" value="{{ substituted.barcode }}"/>
+              {% if is_favorite %}
+              <input type="submit" class="btn btn-success" disabled=True value="Sauvegardé" />
+              {% else %}
               <input type="submit" class="btn btn-primary" value="Sauvegarder" />
+              {% endif %}
           </form>
     </div>
   </div>

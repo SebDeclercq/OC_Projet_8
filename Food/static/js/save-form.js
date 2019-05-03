@@ -14,13 +14,17 @@ function submit_form() {
                 let status = answer.status;
                 if (status == 'success') {
                     alert('Favori sauvegardé !');
+                    let button = form.querySelector('input.btn');
+                    button.disabled = true;
+                    button.classList.add('btn-success');
+                    button.value = 'Sauvegardé';
                 }
                 else {
-                    alert('Une erreur est survenue');
+                    alert('Une erreur est survenue lors de la sauvegarde');
                 }
             }
             else {
-                alert('Une erreur est survenue');
+                alert('Une erreur est survenue lors de la sauvegarde');
             }
         });
         xhr.send(data);

@@ -129,6 +129,7 @@
   <script src="{% static "js/creative.min.js" %}"></script>
   <script src="{% static "js/jquery.ui.autocomplete.html.js" %}"></script>
   <script src="{% static "js/ajax-search.js" %}"></script>
+  <script src="{% static "js/light-or-dark.js" %}"></script>
 
   <script>
       class CarrotSwitcher {
@@ -139,11 +140,15 @@
               this.carrot_white = '{% static "img/carrot_white.svg" %}';
           }
           switch() {
-              if (window.matchMedia("(max-width: 991px)").matches || this.mainNav.classList.contains('navbar-scrolled')) {
-                  this.carrot.src = this.carrot_black;
+              let charColor = window.getComputedStyle(document.querySelector('.fa-user')).color;
+              if (lightOrDark(charColor) == 'light') {
+                  this.carrot.src = this.carrot_white;
               }
               else {
-                  this.carrot.src = this.carrot_white;
+                  this.carrot.src = this.carrot_black;
+              }
+              if (window.matchMedia("(max-width: 991px)").matches) {
+                  this.carrot.src = this.carrot_black;
               }
           }
       }

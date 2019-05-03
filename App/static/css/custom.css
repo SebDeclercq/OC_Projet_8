@@ -57,6 +57,10 @@ q {
 #off-link:hover {
     text-decoration: none;
 }
+#product-name {
+    border-radius: 25px;
+    background-color: rgba(230, 230, 230, .8);
+}
 /* SUBSTITUTES  LISTS */
 #no-result {
     width: 50%;

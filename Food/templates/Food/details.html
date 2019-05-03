@@ -7,9 +7,9 @@
 {% block content %}
 <section class="page-section bg-primary" id="picture" style="background-image: url('{{ substitute.img }}');">
   <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" id="product-name">
       <div class="col-lg-8 text-center">
-        <h1 class="mt-0 text-primary">{{ substitute.name }}</h1>
+        <h1 class="mt-0 text-primary">{{ substitute.name|capfirst }}</h1>
         <hr class="divider my-4">
       </div>
     </div>

@@ -59,24 +59,24 @@
                   aria-label="Chercher" id="nav_food_search">
               </form>
           </li>
-          <li class="nav-item">
+          <li class="nav-item nav-button">
               <a href="{% url 'user:account' %}" class="nav-link">
-                  <i class="fas fa-user"></i>
+                  <i class="fas fa-user"></i><span hidden="true">Mon compte</span>
               </a>
           </li>
-          <li class="nav-item">
-              <a href="{% url "favorite:list" %}" class="nav-link">
+          <li class="nav-item nav-button">
+              <a href="{% url "favorite:list" %}" class="nav-link" id="carrot-pic">
                   <img id="carrot" src="{% static "img/carrot_black.svg" %}"
-                       witdh="25" height="34" alt="Mes aliments"/></a>
+                       witdh="25" height="34" alt="Mes aliments"/><span hidden="true">Mes aliments</span></a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item nav-button">
               {% if user.is_authenticated %}
               <a href="{% url "user:logout" %}" class="nav-link">
-                  <i class="fas fa-sign-out-alt"></i>
+                  <i class="fas fa-sign-out-alt"></i><span hidden="true">Me déconnecter</span>
               </a>
               {% else %}
               <a href="{% url "user:login" %}" class="nav-link">
-                  <i class="fas fa-sign-in-alt"></i>
+                  <i class="fas fa-sign-in-alt"></i><span hidden="true">Me connecter</span>
               </a>
               {% endif %}
           </li>
@@ -139,7 +139,7 @@
               this.carrot_white = '{% static "img/carrot_white.svg" %}';
           }
           switch() {
-              if (this.mainNav.classList.contains('navbar-scrolled')) {
+              if (window.matchMedia("(max-width: 991px)").matches || this.mainNav.classList.contains('navbar-scrolled')) {
                   this.carrot.src = this.carrot_black;
               }
               else {
@@ -147,9 +147,31 @@
               }
           }
       }
+      class NavButtonsDiplayer {
+          constructor() {
+              this.screen_is_small_enough = window.matchMedia("(max-width: 991px)").matches;
+              this.nav_buttons = document.querySelectorAll('.nav-button');
+          }
+          changeDisplay() {
+              if (this.screen_is_small_enough) {
+                  this.nav_buttons.forEach(this._displayText);
+              }
+          }
+          _displayText(e) {
+              let alt_text = e.querySelector('span');
+              alt_text.style.marginLeft = '2rem';
+              let carrot_img = e.querySelector('img');
+              if (carrot_img) {
+                  carrot_img.style.marginLeft = '-.8rem';
+              }
+              alt_text.hidden = false;
+          }
+      }
       window.addEventListener('load', () => {
          let switcher = new CarrotSwitcher();
          switcher.switch();
+         let nav_buttons_displayer = new NavButtonsDiplayer();
+         nav_buttons_displayer.changeDisplay();
          window.addEventListener('scroll', () => {
             switcher.switch();
          });

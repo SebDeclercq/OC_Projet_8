@@ -45,6 +45,18 @@ q {
 #save-product {
     margin-top: 2%;
 }
+#off-link-container {
+    margin-top: 2rem;
+}
+#off-link {
+  border-radius: 25px;
+  border: 2px solid;
+  padding: .5rem;
+  width: 2rem;
+}
+#off-link:hover {
+    text-decoration: none;
+}
 /* SUBSTITUTES  LISTS */
 #no-result {
     width: 50%;

@@ -122,3 +122,13 @@ p.nutriscore {
  #head-section {
      height: 5rem;
  }
+/* LEGAL NOTICE */
+.caps {
+    font-variant: small-caps;
+}
+#legal-notices {
+    margin-left: 3rem;
+}
+dd {
+    margin-left: 3rem;
+}

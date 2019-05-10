@@ -1,5 +1,4 @@
-from typing import Dict, List, Optional, Union
-import json
+from typing import List, Optional, Tuple
 from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render
@@ -16,10 +15,12 @@ class SearchView(View):
         search: Optional[str] = request.POST.get('food_search')
         substitutes: List[Product] = []
         if search is not None:
-            substituted, substitutes = self.substitute_product(search)  # type: ignore  # noqa
+            substituted, substitutes = self.substitute_product(
+                request.user, search
+            )
         return render(request, self.products_list_template, locals())
 
-    def _find_product(self, product_name: str) -> Optional[Product]:
+    def _find_product(self, product_name: str) -> Optional[Product]:  # type: ignore # noqa
         products: QuerySet = Product.objects.filter(name=product_name)
         if products:
             return products.first()  # Should only exist ONE product w/ this name # noqa
@@ -28,13 +29,25 @@ class SearchView(View):
         return Product.get_substitutes_for(product).all()
 
     def substitute_product(
-        self, search: Optional[str]
-    ) -> Union[QuerySet, List[None]]:
+        self, user: User, search: Optional[str]
+    ) -> Tuple[Optional[Product], List[Product]]:
         if search is not None:
             product: Optional[Product] = self._find_product(search)
+            substitutes: List[Product] = []
             if product is not None:
-                return product, self._find_substitutes(product)
-        return [None, None]
+                if user.is_authenticated:
+                    for substitute in self._find_substitutes(product):
+                        query: QuerySet = Favorite.objects.filter(
+                            user=user, substitute=substitute
+                        )
+                        if query:
+                            substitute.is_favorite = True
+                        else:
+                            substitute.is_favorite = False
+                        substitutes.append(substitute)
+                else:
+                    substitutes = list(self._find_substitutes(product))
+        return (product, substitutes)
 
 
 class ProductView(View):

@@ -18,38 +18,40 @@
     <div class="row">
         {% for s in substitutes %}
             <div class="col-lg-4 text-center">
-                {% if s.nutrition_grade in 'A,B'|make_list %}
-                <p class="nutriscore bg-success text-white">
-                {% elif s.nutrition_grade in 'C,D'|make_list %}
-                <p class="nutriscore bg-warning text-white">
-                {% elif s.nutrition_grade == 'E' %}
-                <p class="nutriscore bg-danger text-white">
-                {% else %}
-                <p class="nutriscore">
-                {% endif %}
-                    {{ s.nutrition_grade }}
-                </p>
-                <a href="{% url "food:product" substitute_barcode=s.barcode substituted_barcode=substituted.barcode %}">
-                    <img class="product-img" src="{{ s.img|resize_img:200 }}" alt="">
-                    <p class="product-name">{{ s.name|safe }}</p>
-                </a>
-                {% if user.is_authenticated %}
-                <div class="row">
-                    <div class="col-lg-12 text-center save-product">
-                        <form class="save" style="display: inline-block;" action="{% url "favorite:save" %}" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="substitute" value="{{ s.barcode }}"/>
-                            <input type="hidden" name="substituted" value="{{ substituted.barcode }}"/>
-                            {% if s.is_favorite %}
-                            <input type="submit" class="btn btn-success" disabled=True value="Sauvegardé" />
-                            {% else %}
-                            <input type="submit" class="btn btn-primary" value="Sauvegarder" />
-                            {% endif %}
-                        </form>
-                  </div>
+                <div class="img-container">
+                    {% if s.nutrition_grade in 'A,B'|make_list %}
+                    <p class="nutriscore bg-success text-white">
+                    {% elif s.nutrition_grade in 'C,D'|make_list %}
+                    <p class="nutriscore bg-warning text-white">
+                    {% elif s.nutrition_grade == 'E' %}
+                    <p class="nutriscore bg-danger text-white">
+                    {% else %}
+                    <p class="nutriscore">
+                    {% endif %}
+                        {{ s.nutrition_grade }}
+                    </p>
+                    <a href="{% url "food:product" substitute_barcode=s.barcode substituted_barcode=substituted.barcode %}">
+                        <img class="product-img" src="{{ s.img|resize_img:400 }}" alt="">
+                        <p class="product-name">{{ s.name|safe }}</p>
+                    </a>
+                    {% if user.is_authenticated %}
+                    <div class="row">
+                        <div class="col-lg-12 text-center save-product">
+                            <form class="save" style="display: inline-block;" action="{% url "favorite:save" %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="substitute" value="{{ s.barcode }}"/>
+                                <input type="hidden" name="substituted" value="{{ substituted.barcode }}"/>
+                                {% if s.is_favorite %}
+                                <input type="submit" class="btn btn-success" disabled=True value="Sauvegardé" />
+                                {% else %}
+                                <input type="submit" class="btn btn-primary" value="Sauvegarder" />
+                                {% endif %}
+                            </form>
+                      </div>
+                    </div>
+                    <hr class="divider my-1">
+                    {% endif %}
                 </div>
-                <hr class="divider my-1">
-                {% endif %}
             </div>
         {% empty %}
         <div class="col-lg-12 ml-auto text-center">

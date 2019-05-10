@@ -66,51 +66,27 @@ q {
     width: 50%;
     margin: 0 auto;
 }
-p.nutriscore {
-    border-radius: 50%;
-    text-align: center;
-    font-weight: bold;
-    position: absolute;
-    top: -5%;
-    right: 85px;
-    width: 7.5%;
-}
-/* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) {
-    p.nutriscore {
-        right: 180px;
-        width: 4.5%;
-    }
-}
-
-/* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {
-    p.nutriscore {
-        right: 270px;
-        width: 3.5%;
-    }
-}
-
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {
-    p.nutriscore {
-        right: 75px;
-        width: 7.5%;
-    }
-}
-
-/* Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
-    p.nutriscore {
-        right: 100px;
-        width: 6%;
-    }
+.img-container {
+    position: relative;
+    width: 200px;
+    margin: 15px auto;
 }
 .product-img {
-    width: 160px;
-    height: 160px;
     object-fit: cover;
+    object-position: 50% 50%;
+    width: 200px;
+    height: 200px;
 }
+.nutriscore {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    right: -1rem;
+    top: -1rem;
+    line-height: 2rem;
+    border-radius: 50%;
+}
+
 @media (min-width: 992px) {
     .product-name {
         height: 50px;

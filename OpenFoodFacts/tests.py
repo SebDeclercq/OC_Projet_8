@@ -19,8 +19,3 @@ class TestAPI(TestCase):
             self.assertIn(product.nutrition_grades.upper(), allowed_grades)
             self.assertIn(product.to_food_db['nutrition_grade'],
                           allowed_grades)
-
-
-class TestCustomCommand(TestCase):
-    def setUp(self) -> None:
-        self.command: Command = Command()

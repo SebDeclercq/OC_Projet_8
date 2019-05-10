@@ -6,7 +6,7 @@
 {% block title %}Résultats{% endblock %}
 
 {% block content %}
-<section class="page-section bg-primary" id="head-section">
+<section id="products-head-section" class="page-section bg-primary" id="head-section">
     <div class="col-lg-12 text-center text-white">
         <h1 class="text-uppercase">Vous pouvez remplacer cet aliment par :</h1>
         <hr class="divider my-4">
@@ -20,11 +20,11 @@
             <div class="col-lg-4 text-center">
                 <div class="img-container">
                     {% if s.nutrition_grade in 'A,B'|make_list %}
-                    <p class="nutriscore bg-success text-white">
+                    <p class="nutriscore good-nutriscore text-white">
                     {% elif s.nutrition_grade in 'C,D'|make_list %}
-                    <p class="nutriscore bg-warning text-white">
+                    <p class="nutriscore not-so-bad-nutriscore text-white">
                     {% elif s.nutrition_grade == 'E' %}
-                    <p class="nutriscore bg-danger text-white">
+                    <p class="nutriscore awful-nutriscore bg-danger text-white">
                     {% else %}
                     <p class="nutriscore">
                     {% endif %}

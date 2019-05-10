@@ -86,6 +86,19 @@ q {
     line-height: 2rem;
     border-radius: 50%;
 }
+#products-head-section {
+    height: 20rem;
+}
+
+.good-nutriscore {
+    background-color: green;
+}
+.not-so-bad-nutriscore {
+    background-color: orange;
+}
+.awful-nutriscore {
+    background-color: red;
+}
 
 @media (min-width: 992px) {
     .product-name {

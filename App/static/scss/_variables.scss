@@ -6,13 +6,23 @@
 $orange: #f4623a !default;
 $brown: #5c4d42 !default;
 
-// Set primary color to orange
-$primary: $orange !default;
+$rooibos: #c45525 !default;
+$moules: #345a61 !default;
+$rigolo: #86ebe6 !default;
+$caramel: #de9440 !default;
+$biscuit: #e8a75d !default;
+
+$primary: $rooibos !default;
+$secondary: $moules !default;
+$success: $rigolo !default;
+$danger: $biscuit !default;
+$warning: $caramel !default;
+
 
 // Font overrides
-$font-family-sans-serif: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", 'Noto Color Emoji' !default;
+$font-family-sans-serif: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", 'Noto Color Emoji' !default;
 
-$font-family-serif: "Merriweather", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", 'Noto Color Emoji' !default;
+$font-family-serif: "Scope One", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", 'Noto Color Emoji' !default;
 
 $font-family-base: $font-family-serif !default;
 

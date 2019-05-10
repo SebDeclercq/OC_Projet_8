@@ -132,6 +132,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'App', 'static'),
+    os.path.join(BASE_DIR, 'Favorite', 'static'),
+    os.path.join(BASE_DIR, 'Food', 'static'),
+)
+
 AUTH_USER_MODEL = 'User.User'
 
 LOGIN_URL: str = '/user/login'

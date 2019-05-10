@@ -18,32 +18,34 @@
     <div class="row">
         {% for f in favorites %}
             <div class="col-lg-4 text-center favorite">
-                {% if f.substitute.nutrition_grade in 'A,B'|make_list %}
-                <p class="nutriscore bg-success text-white">
-                {% elif f.substitute.nutrition_grade in 'C,D'|make_list %}
-                <p class="nutriscore bg-warning text-white">
-                {% elif f.substitute.nutrition_grade == 'E' %}
-                <p class="nutriscore bg-danger text-white">
-                {% else %}
-                <p class="nutriscore">
-                {% endif %}
-                    {{ f.substitute.nutrition_grade }}
-                </p>
-                <a href="{% url "food:product" substitute_barcode=f.substitute.barcode substituted_barcode=f.substituted.barcode %}">
-                    <img class="product-img" src="{{ f.substitute.img|resize_img:200 }}" alt="">
-                    <p class="product-name">{{ f.substitute.name|safe }}</p>
-                </a>
-                <div class="row">
-                    <div class="col-lg-12 text-center delete-product">
-                        <form class="delete" style="display: inline-block;" action="{% url "favorite:delete" %}" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="substitute" value="{{ f.substitute.barcode }}"/>
-                            <input type="hidden" name="substituted" value="{{ f.substituted.barcode }}"/>
-                            <input type="submit" class="btn btn-danger" value="Supprimer" />
-                        </form>
-                  </div>
+                <div class="img-container">
+                    {% if f.substitute.nutrition_grade in 'A,B'|make_list %}
+                    <p class="nutriscore bg-success text-white">
+                    {% elif f.substitute.nutrition_grade in 'C,D'|make_list %}
+                    <p class="nutriscore bg-warning text-white">
+                    {% elif f.substitute.nutrition_grade == 'E' %}
+                    <p class="nutriscore bg-danger text-white">
+                    {% else %}
+                    <p class="nutriscore">
+                    {% endif %}
+                        {{ f.substitute.nutrition_grade }}
+                    </p>
+                    <a href="{% url "food:product" substitute_barcode=f.substitute.barcode substituted_barcode=f.substituted.barcode %}">
+                        <img class="product-img" src="{{ f.substitute.img|resize_img:200 }}" alt="">
+                        <p class="product-name">{{ f.substitute.name|safe }}</p>
+                    </a>
+                    <div class="row">
+                        <div class="col-lg-12 text-center delete-product">
+                            <form class="delete" style="display: inline-block;" action="{% url "favorite:delete" %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="substitute" value="{{ f.substitute.barcode }}"/>
+                                <input type="hidden" name="substituted" value="{{ f.substituted.barcode }}"/>
+                                <input type="submit" class="btn btn-danger" value="Supprimer" />
+                            </form>
+                      </div>
+                    </div>
+                    <hr class="divider my-1">
                 </div>
-                <hr class="divider my-1">
             </div>
         {% empty %}
         <div class="col-lg-12 ml-auto text-center">

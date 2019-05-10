@@ -32,7 +32,19 @@
                     <img class="product-img" src="{{ s.img|resize_img:200 }}" alt="">
                     <p class="product-name">{{ s.name|safe }}</p>
                 </a>
+                {% if user.is_authenticated %}
+                <div class="row">
+                    <div class="col-lg-12 text-center save-product">
+                        <form class="save" style="display: inline-block;" action="{% url "favorite:save" %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="substitute" value="{{ s.barcode }}"/>
+                            <input type="hidden" name="substituted" value="{{ substituted.barcode }}"/>
+                            <input type="submit" class="btn btn-primary" value="Sauvegarder" />
+                        </form>
+                  </div>
+                </div>
                 <hr class="divider my-1">
+                {% endif %}
             </div>
         {% empty %}
         <div class="col-lg-12 ml-auto text-center">

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% load static %}
 {% load food_resize_img %}
 
 {% block title %}Résultats{% endblock %}
@@ -58,4 +59,8 @@
 
     </div>
 </section>
+{% endblock %}
+
+{% block bottom_scripts %}
+    <script src="{% static "js/save-form.js" %}"></script>
 {% endblock %}

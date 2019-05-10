@@ -76,6 +76,6 @@ class AjaxView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         results: List[str] = []
         query: str = request.GET.get('term', '')
-        for r in Product.objects.filter(name__icontains=query):
+        for r in Product.objects.filter(name__icontains=query)[:15]:
             results.append(r.name)
         return JsonResponse(results, safe=False)

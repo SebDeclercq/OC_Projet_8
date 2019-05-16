@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'h*u_9fsi*h_7f&_)4%v_#o1rkz3-regppdpu@u^e*hi@-$x)04'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -144,5 +144,6 @@ AUTH_USER_MODEL = 'User.User'
 
 LOGIN_URL: str = '/user/login'
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
+if os.environ.get('HEROKU'):
+    # Activate Django-Heroku.
+    django_heroku.settings(locals())

@@ -38,7 +38,6 @@ class FoodDbFeeder:
                     Product.objects.create(**product.to_food_db)
                 )
                 print('.', end='')
-                time.sleep(.2)
             except IntegrityError:
                 pass
 

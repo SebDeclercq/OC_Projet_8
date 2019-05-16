@@ -20,11 +20,11 @@
             <div class="col-lg-4 text-center favorite">
                 <div class="img-container">
                     {% if f.substitute.nutrition_grade in 'A,B'|make_list %}
-                    <p class="nutriscore bg-success text-white">
+                    <p class="nutriscore good-nutriscore text-white">
                     {% elif f.substitute.nutrition_grade in 'C,D'|make_list %}
-                    <p class="nutriscore bg-warning text-white">
+                    <p class="nutriscore not-so-bad-nutriscore text-white">
                     {% elif f.substitute.nutrition_grade == 'E' %}
-                    <p class="nutriscore bg-danger text-white">
+                    <p class="nutriscore awful-nutriscore bg-danger text-white">
                     {% else %}
                     <p class="nutriscore">
                     {% endif %}

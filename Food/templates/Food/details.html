@@ -27,9 +27,10 @@
           <img src="{{ substitute.nutrition_img|resize_img:400 }}" alt="">
       </div>
     </div>
-    <div class="row" id="url-off">
-        <div class="col-lg-12 text-center" id="off-link-container">
-            <h3><a id="off-link" href="{{ substitute.url }}" target="_blank">Voir la fiche d'OpenFoodFacts</a></h3>
+    <div class="row flex-d justify-content-center" id="url-off">
+        <div class="text-primary text-center" id="off-link-container">
+            <h3><a id="off-link" href="{{ substitute.url }}"
+                target="_blank">Voir la fiche d'OpenFoodFacts</a></h3>
         </div>
   </div>
   {% if user.is_authenticated %}

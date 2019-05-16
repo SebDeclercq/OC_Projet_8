@@ -21,10 +21,10 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-4 ml-auto text-center">
-        <img src="https://static.openfoodfacts.org/images/misc/nutriscore-{{ substitute.nutrition_grade|lower }}.png" alt="">
+        <img class="details-img" src="https://static.openfoodfacts.org/images/misc/nutriscore-{{ substitute.nutrition_grade|lower }}.png" alt="">
       </div>
       <div class="col-lg-4 mr-auto text-center">
-          <img src="{{ substitute.nutrition_img|resize_img:400 }}" alt="">
+          <img class="details-img" src="{{ substitute.nutrition_img|resize_img:400 }}" alt="">
       </div>
     </div>
     <div class="row flex-d justify-content-center" id="url-off">

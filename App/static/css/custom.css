@@ -63,6 +63,14 @@ q {
     border-radius: 25px;
     background-color: rgba(75, 75, 75, .8);
 }
+
+@media (width < 400px) {
+    .details-img {
+        width: 200px;
+        height: auto;
+    }
+}
+
 /* SUBSTITUTES  LISTS */
 #no-result {
     width: 50%;
